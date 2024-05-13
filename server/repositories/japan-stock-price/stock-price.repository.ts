@@ -1,8 +1,8 @@
 import prismaClient from "@server/lib/prisma-client";
-import { CreateStockInput } from "./input";
-import { StockModel } from "./stock-price.model";
+import { CreateStockPriceInput } from "./input";
+import { StockPriceModel } from "./stock-price.model";
 
-export const List = async (): Promise<StockModel[]> => {
+export const List = async (): Promise<StockPriceModel[]> => {
   const response = await prismaClient.japanStockPrice.findMany({
     orderBy: {
       name: "asc", // 名前順で取得
@@ -20,7 +20,9 @@ export const List = async (): Promise<StockModel[]> => {
 
   return response;
 };
-export const Create = async (data: CreateStockInput): Promise<StockModel> => {
+export const Create = async (
+  data: CreateStockPriceInput
+): Promise<StockPriceModel> => {
   const response = await prismaClient.japanStockPrice.create({
     data: {
       name: data.name,

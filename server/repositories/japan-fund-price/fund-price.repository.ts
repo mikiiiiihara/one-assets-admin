@@ -1,8 +1,8 @@
 import prismaClient from "@server/lib/prisma-client";
-import { CreateFundInput } from "./input";
-import { FundModel } from "./fund-price.model";
+import { CreateFundPriceInput } from "./input";
+import { FundPriceModel } from "./fund-price.model";
 
-export const List = async (): Promise<FundModel[]> => {
+export const List = async (): Promise<FundPriceModel[]> => {
   const response = await prismaClient.japanFundPrice.findMany({
     orderBy: {
       name: "asc", // 名前順で取得
@@ -19,7 +19,9 @@ export const List = async (): Promise<FundModel[]> => {
 
   return response;
 };
-export const Create = async (data: CreateFundInput): Promise<FundModel> => {
+export const Create = async (
+  data: CreateFundPriceInput
+): Promise<FundPriceModel> => {
   const response = await prismaClient.japanFundPrice.create({
     data: {
       name: data.name,

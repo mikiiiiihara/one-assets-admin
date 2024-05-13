@@ -1,4 +1,4 @@
-export type StockModel = {
+export type StockPriceModel = {
   id: string;
   name: string;
   price: number;
