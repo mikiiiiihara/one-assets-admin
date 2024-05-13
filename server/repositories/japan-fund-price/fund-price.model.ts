@@ -1,6 +1,5 @@
-export type CashModel = {
+export type FundModel = {
   id: string;
   name: string;
   price: number;
-  sector: string;
 };
