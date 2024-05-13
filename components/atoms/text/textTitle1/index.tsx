@@ -5,7 +5,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ children }) => {
-  return <h1 className="text-xl ">{children}</h1>;
+  return <h1 className="text-xl m-2">{children}</h1>;
 };
 Component.displayName = "TextTitle1";
 export const TextTitle1 = React.memo(Component);
