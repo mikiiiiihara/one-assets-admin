@@ -23,38 +23,7 @@ const useFundPrices = () => {
     getFundPrices();
   }, []);
 
-  const updateFundPrice = useCallback(
-    async (id: string, price: number) => {
-      setIsLoading(true);
-      try {
-        const updatedFund = await fetchApi<FundPriceModel>(
-          `/api/japan-funds/${id}`,
-          setError,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ price }),
-          }
-        );
-        if (updatedFund !== null) {
-          setFundPrices(
-            fundPrices.map((f) => (f.id === id ? { ...f, price } : f))
-          );
-        } else {
-          throw new Error("Failed to update fund price");
-        }
-      } catch (e) {
-        setError((e as Error).message);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [fetchApi, fundPrices]
-  );
-
-  return { fundPrices, isLoading, updateFundPrice, error };
+  return { fundPrices, isLoading, error, setFundPrices };
 };
 
 export default useFundPrices;

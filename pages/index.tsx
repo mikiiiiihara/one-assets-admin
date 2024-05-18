@@ -8,23 +8,25 @@ export default function Home() {
     fundPrices,
     isLoading: isFundLoading,
     error: fundError,
-    updateFundPrice,
+    setFundPrices,
   } = useFundPrices();
   const {
     stockPrices,
     isLoading: isStockLoading,
     error: stockError,
-    updateStockPrice,
+    setStockPrices,
   } = useStockPrices();
+
   if (isFundLoading || isStockLoading) return <Loading />;
   if (fundError) return <div>Error: {fundError}</div>;
   if (stockError) return <div>Error: {stockError}</div>;
+
   return (
     <Top
       japanFundPrices={fundPrices}
       japanStockPrices={stockPrices}
-      updateFundPrice={updateFundPrice}
-      updateStockPrice={updateStockPrice}
+      setFundPrices={setFundPrices}
+      setStockPrices={setStockPrices}
     />
   );
 }

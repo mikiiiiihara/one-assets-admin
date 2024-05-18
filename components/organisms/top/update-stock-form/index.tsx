@@ -1,35 +1,42 @@
 import { PrimaryButton } from "@components/molecules/primary-button";
+import useUpdateStockPrice from "@hooks/useUpdateStockPrice";
 import { StockPriceModel } from "@server/repositories/japan-stock-price/stock-price.model";
 import React, { useState } from "react";
 
 export type Props = {
   japanStockPrice: StockPriceModel;
-  updateStockPrice: (
-    id: string,
-    price: number,
-    dividend: number
-  ) => Promise<void>;
+  setStockPrices: React.Dispatch<React.SetStateAction<StockPriceModel[]>>;
 };
 
 const UpdateStockForm: React.FC<Props> = ({
   japanStockPrice,
-  updateStockPrice,
+  setStockPrices,
 }) => {
   const [stockPrice, setStockPrice] = useState(japanStockPrice.price);
   const [dividend, setDividend] = useState(japanStockPrice.dividend);
-  // ファンド価格更新処理
-  const handleUpdateFundPrice = async (e: React.FormEvent) => {
+  const { isUpdating, updateStockPrice, error } = useUpdateStockPrice();
+
+  const handleUpdateStockPrice = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateStockPrice(
+    const updatedStock = await updateStockPrice(
       japanStockPrice.id,
       Number(stockPrice),
       Number(dividend)
     );
-    alert("更新しました！");
+    console.log("Update result:", updatedStock);
+    if (updatedStock) {
+      setStockPrices((prevStockPrices) =>
+        prevStockPrices.map((sp) =>
+          sp.id === japanStockPrice.id ? updatedStock : sp
+        )
+      );
+      alert("更新しました！");
+    }
   };
+
   return (
     <form
-      onSubmit={handleUpdateFundPrice}
+      onSubmit={handleUpdateStockPrice}
       className="w-[90%] m-auto mb-4 border p-4 rounded drop-shadow border-neutral-600"
     >
       <p>株式名：{japanStockPrice.name}</p>
@@ -52,8 +59,13 @@ const UpdateStockForm: React.FC<Props> = ({
             placeholder="配当を入力してください"
           />
         </div>
-        <PrimaryButton className="ml-4" content="更新" type="submit" />
+        <PrimaryButton
+          className="ml-4"
+          content={!isUpdating ? "更新" : "更新中..."}
+          type="submit"
+        />
       </div>
+      {error && <div className="text-red-500 mt-2">{error}</div>}
     </form>
   );
 };

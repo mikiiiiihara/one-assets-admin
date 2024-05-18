@@ -9,19 +9,15 @@ import UpdateStockForm from "./update-stock-form";
 export type Props = {
   japanFundPrices: FundPriceModel[];
   japanStockPrices: StockPriceModel[];
-  updateFundPrice: (id: string, price: number) => Promise<void>;
-  updateStockPrice: (
-    id: string,
-    price: number,
-    dividend: number
-  ) => Promise<void>;
+  setFundPrices: React.Dispatch<React.SetStateAction<FundPriceModel[]>>;
+  setStockPrices: React.Dispatch<React.SetStateAction<StockPriceModel[]>>;
 };
 
 const Top: React.FC<Props> = ({
   japanFundPrices,
   japanStockPrices,
-  updateFundPrice,
-  updateStockPrice,
+  setFundPrices,
+  setStockPrices,
 }) => {
   return (
     <Center>
@@ -31,7 +27,7 @@ const Top: React.FC<Props> = ({
           <UpdateFundForm
             key={fundPrice.id}
             japanFundPrice={fundPrice}
-            updateFundPrice={updateFundPrice}
+            setFundPrices={setFundPrices}
           />
         ))}
       </section>
@@ -41,7 +37,7 @@ const Top: React.FC<Props> = ({
           <UpdateStockForm
             key={stockPrice.id}
             japanStockPrice={stockPrice}
-            updateStockPrice={updateStockPrice}
+            setStockPrices={setStockPrices}
           />
         ))}
       </section>
