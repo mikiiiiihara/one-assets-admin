@@ -35,20 +35,20 @@ const UpdateFundForm: React.FC<Props> = ({ japanFundPrice, setFundPrices }) => {
   return (
     <form
       onSubmit={handleUpdateFundPrice}
-      className="w-[90%] m-auto mb-4 border p-4 rounded drop-shadow border-neutral-600"
+      className="w-auto m-auto mb-4 border p-4 rounded drop-shadow border-neutral-600"
     >
       <p>ファンド名：{japanFundPrice.name}</p>
       <div className="flex justify-center items-center">
         価格：
         <input
-          className="bg-[#343a40] border-neutral-600 border rounded m-2"
+          className="bg-[#343a40] border-neutral-600 border rounded m-2 w-20"
           type="number"
           value={fundPrice}
           onChange={(e) => setFundPrice(Number(e.target.value))}
           placeholder="価格を入力してください"
         />
         <PrimaryButton
-          className="ml-4"
+          className="ml-1"
           content={!isUpdating ? "更新" : "更新中..."}
           type="submit"
         />
