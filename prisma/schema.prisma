@@ -91,8 +91,10 @@ model UsStock {
 model JapanStock {
   id                String  @id @default(cuid())
   code              String
+  name              String @default("")
   getPrice          Float
   quantity          Int
+  dividends          Float @default(0)
   sector            String
   userId            String
   createdAt         DateTime @default(now())
@@ -141,21 +143,23 @@ model JapanFundPrice {
   updatedAt         DateTime @updatedAt
 }
 
-model JapanStockPrice {
-  id                String  @id @default(cuid())
-  name              String
-  code              String
-  price             Float
-  dividend          Float
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-}
-
 model Cash {
   id                String  @id @default(cuid())
   name              String
   price             Float
   sector            String
+  userId            String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model AssetHistory {
+  id                String  @id @default(cuid())
+  stock             Float
+  fund              Float
+  crypto            Float
+  fixedIncomeAsset  Float
+  cash              Float
   userId            String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
